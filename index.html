@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome Message</title>
+    <style></style>
+  </head>
+  <body>
+  </body>
+  <script>
+    // console.log(navigator.language);
+
+    class User {
+      constructor(userLang) {
+        this._userLang = userLang;
+        this.determLang();
+        this._msgTxt = null;
+      }
+
+      // get userLang() {
+      //   return this._userLang;
+      // }
+
+      determLang() {
+        if (this._userLang == null) {
+          this._userLang = navigator.language;
+        } else if (!navigator.language) {
+          this._userLang = 'En';
+        }
+        switch (this._userLang) {
+          case 'en-US':
+          case 'en':
+          this._userLang = 'En';
+          break;
+          case 'fr':
+          this._userLang = 'Fr';
+          break;
+          case 'de-DE':
+          this._userLang = 'De';
+          break;
+          default:
+          this._userLang = 'En';
+        }
+        console.log(this._userLang);
+      }
+
+      message(msgType) {
+        (this[msgType + this._userLang])();     //self-executing function
+        //console.log(this._msgTxt);
+        let div = document.createElement('div');
+        div.textContent = this._msgTxt;
+        document.body.appendChild(div);
+      }
+
+      welcomeEn() {
+        this._msgTxt = 'Hello';
+      }
+
+      welcomeFr() {
+        this._msgTxt = 'Bonjour';
+      }
+
+      welcomeDe() {
+        this._msgTxt = 'Guten Tag';
+      }
+
+      hintEn() {
+        this._msgTxt = 'Hint';
+      }
+
+      hintFr() {
+        this._msgTxt = 'Remarque';
+      }
+
+      hintDe() {
+        this._msgTxt = 'Hinweis';
+      }
+    }
+
+    const user1 = new User('fr');
+    user1.message('welcome');
+
+    const user2 = new User('de-DE');
+    user2.message('hint');
+
+    const user3 = new User();
+    user3.message('hint');
+
+  </script>
+</html>
